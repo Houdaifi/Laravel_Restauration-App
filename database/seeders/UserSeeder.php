@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => Str::random(10),
+            'username' => Str::random(10),
             'email' => Str::random(10).'@gmail.com',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'role' => 'admin',
@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name' => Str::random(10),
+            'username' => Str::random(10),
             'email' => Str::random(10).'@gmail.com',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'role' => 'user',

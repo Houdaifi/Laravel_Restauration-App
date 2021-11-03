@@ -14,9 +14,9 @@ class CommandsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('status')->insert([
-            'user_id' => '',
-            'statut_id' => ''
+        DB::table('commands')->insert([
+            'user_id' => 1,
+            'statut_id' => 1
         ]);
     }
 }

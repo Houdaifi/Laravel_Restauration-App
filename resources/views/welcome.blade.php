@@ -18,6 +18,6 @@
             }
         </style>
     </head>
-    <body class="">
+    <body class="bg-red-500">
     </body>
 </html>
