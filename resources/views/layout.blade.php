@@ -22,11 +22,11 @@
 
         <nav class="shadow flex justify-between p-2 bg-white">
             <ul class="flex">
-                <li class="p-3"><a href="{{route('dashboard')}}">Dashboard</a> </li>
+                <li class="p-3"><a href="{{URL('/')}}">Dashboard</a> </li>
             </ul>
             <ul class="flex">
                 @auth
-                    <li class="p-3 font-semibold"> <a href="{{route('dashboard')}}"> {{ auth()->user()->username }} </a></li>
+                    <li class="p-3 font-semibold"> <a href="{{URL('/')}}"> {{ auth()->user()->username }} </a></li>
                     <li class="p-3">
                         <form action="{{route('logout')}}" method="POST">
                             @csrf
