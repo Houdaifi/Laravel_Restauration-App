@@ -13,6 +13,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
         <style>
+            @import url("https://fonts.googleapis.com/css2?family=Fuggles&display=swap");
             body {
                 font-family: 'Nunito', sans-serif;
             }
@@ -20,23 +21,26 @@
     </head>
     <body class="bg-gray-50">
 
-        <nav class="shadow flex justify-between p-2 bg-white">
-            <ul class="flex">
-                <li class="p-3"><a href="{{URL('/')}}">Dashboard</a> </li>
-            </ul>
-            <ul class="flex">
+        <nav class="shadow flex justify-between p-3 bg-white">
+            <div style="font-family: 'Fuggles', cursive;" class="flex items-center space-x-1 text-4xl tracking-wider font-extralight cursor-pointer">
+                <a href="{{URL('/')}}">Restauration App</a>
+                <img src="{{asset('/attached_files/icon.png')}}" alt="icon">
+            </div>
+            <div class="flex items-center space-x-6">
                 @auth
-                    <li class="p-3 font-semibold"> <a href="{{URL('/')}}"> {{ auth()->user()->username }} </a></li>
-                    <li class="p-3">
-                        <form action="{{route('logout')}}" method="POST">
-                            @csrf
-                            <button type="submit" class="bg-blue-500 rounded-md text-white font-semibold w-24 h-8">Logout</button>
-                        </form>
-                    </li>
+                    {{-- <li class=" font-semibold"> <a href="{{URL('/')}}"> {{ auth()->user()->username }} </a></li> --}}
+                    <form action="{{URL('/commands')}}" method="GET">
+                        @csrf
+                        <button type="submit" class="rounded-md text-black font-semibold w-24 h-8">Commands</button>
+                    </form>
+                    <form action="{{route('logout')}}" method="POST">
+                        @csrf
+                        <button type="submit" class="bg-blue-500 rounded-md text-white font-semibold w-24 h-8">Logout</button>
+                    </form>
                 @endauth
                 @guest
-                    <li class="p-3"><a href="{{ route('login') }}">Login</a> </li>
-                    <li class="p-3"><a href="{{ route('register') }}">Register</a> </li>
+                    <a href="{{ route('login') }}">Login</a> 
+                    <a href="{{ route('register') }}">Register</a> 
                 @endguest
             </ul>
         </nav>

@@ -15,15 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ProductsController::class, 'index'])->middleware('guest');
+Route::get('/', [ProductsController::class, 'index']);
 
-Route::get('/login', [AuthController::class, 'show_login'])->middleware('guest')->name('login');
+Route::get('/login', [AuthController::class, 'create'])->middleware('guest')->name('login');
 Route::post('/login', [AuthController::class, 'authenticate']);
 
-Route::get('/register', [AuthController::class, 'register'])->middleware('guest')->name('register');
+Route::get('/register', [AuthController::class, 'index'])->middleware('guest')->name('register');
+Route::post('/register', [AuthController::class, 'store']);
 
-Route::get('/logout', [AuthController::class, 'index'])->name('logout');
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', [DahsboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
