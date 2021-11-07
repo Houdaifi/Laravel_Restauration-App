@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="flex flex-col justify-center items-center p-12">
-        <h1 class="text-center text-gray-800 dark:text-gray-300 mb-12 text-3xl font-extrabold">Menu</h1>
+        <h1 class="text-center text-gray-800 mb-12 text-3xl font-extrabold">Menu</h1>
         {{-- Products Grid --}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($products as $product)
@@ -17,11 +17,49 @@
                     {{$product->description}}
                   </p>
                 </div>
-                <div class="px-3 pb-2 flex justify-end">
-                  <a href="#" class="bg-yellow-400 px-3 py-1 rounded text-xs">Add to Cart</a>
-                </div>
+                @auth
+                  <div class="px-3 pb-2 flex justify-end">
+                    <button id="{{'btnAdd'.$product->id}}" type="button" class="bg-yellow-400 px-3 py-1 rounded text-xs" onclick="addToCart({{$product->id}})">Add to Cart</button>
+                  </div>
+                @endauth
               </div>
             @endforeach
         </div>    
     </div>
+
+    <script>
+      
+      var currentOrders = JSON.parse(sessionStorage.getItem("orders"));
+
+      // Change style Off choosed Products
+      function change_cart_button(product_id){
+        const btnClicked = document.getElementById('btnAdd'+product_id);
+        btnClicked.innerHTML = "Added";
+        btnClicked.classList.remove("bg-yellow-400");
+        btnClicked.classList.add("bg-green-400");
+        btnClicked.disabled = true;
+      }
+
+      let orders = []
+
+      currentOrders.forEach(el => {
+        change_cart_button(el);
+        orders.push(el);
+      });
+      
+      function addToCart(product_id){
+        if(!orders.includes[product_id]) orders.push(product_id)
+
+        // Change Clicked Btn Style
+        change_cart_button(product_id);
+
+        sessionStorage.setItem('orders', JSON.stringify(orders));
+
+        ordersNotif.innerHTML = orders.length;
+
+        document.getElementById('OrdersIds').value = JSON.parse(sessionStorage.getItem("orders"));
+
+      }
+    </script>
+
 @endsection

@@ -28,7 +28,12 @@
             </div>
             <div class="flex items-center space-x-6">
                 @auth
-                    {{-- <li class=" font-semibold"> <a href="{{URL('/')}}"> {{ auth()->user()->username }} </a></li> --}}
+                    <form class="relative" action="{{route('cart')}}" method="GET">
+                        @csrf
+                        <div class="absolute left-9 bottom-3 px-1 bg-red-500 text-white text-xs rounded-full" id="ordersCount"></div>
+                        <button type="submit" class="bg-yellow-400 rounded-xl text-black font-light px-2 text-sm">Cart</button>
+                        <input type="hidden" id="OrdersIds" name="OrdersIds" value="">
+                    </form>
                     <form action="{{URL('/commands')}}" method="GET">
                         @csrf
                         <button type="submit" class="rounded-md text-black font-semibold w-24 h-8">Commands</button>
@@ -47,4 +52,11 @@
         @yield('content')
         
     </body>
+
+    <script>
+        let ordersNotif = document.getElementById('ordersCount');
+        ordersNotif.innerHTML = JSON.parse(sessionStorage.getItem("orders")).length;
+
+        document.getElementById('OrdersIds').value = JSON.parse(sessionStorage.getItem("orders"));
+    </script>
 </html>

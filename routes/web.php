@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CommandController;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,5 +26,5 @@ Route::post('/register', [AuthController::class, 'store']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard', [DahsboardController::class, 'index'])->middleware('auth')->name('dashboard');
+Route::get('/cart', [CommandController::class, 'create'])->middleware('auth')->name('cart');
 
