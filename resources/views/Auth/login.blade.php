@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="flex justify-center items-center h-screen">
-        <div class="flex flex-col items-center bg-white w-1/4 rounded-lg shadow-lg">
+        <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-lg">
             <h1 class="font-bold text-gray-700 text-3xl mt-10">Sign In</h1>
             <form class="flex flex-col justify-around space-y-4" action="{{route('login')}}" method="POST">
                 @csrf

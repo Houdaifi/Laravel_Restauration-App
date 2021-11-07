@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commands;
 use App\Models\Products;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class CommandController extends Controller
 {
@@ -14,7 +18,13 @@ class CommandController extends Controller
      */
     public function index()
     {
-        //
+        $commands = Commands::with('command_products:name,price', 'statut:id,name');
+
+        if(Auth()->user()->role == 'user'){
+            $commands = $commands->where('user_id', Auth()->user()->id);
+        }
+
+        return view('commands', ['commands' => $commands->get()]);
     }
 
     /**
@@ -24,6 +34,10 @@ class CommandController extends Controller
      */
     public function create(Request $request)
     {
+
+        if(empty($request->OrdersIds)){
+            return response()->json(['message' => '403 Forbidden'], Response::HTTP_FORBIDDEN);
+        }
 
         $products = [];
 
@@ -44,7 +58,29 @@ class CommandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        DB::beginTransaction();
+
+        $created_command = Commands::create([
+            'user_id' => Auth()->user()->id,
+            'statut_id' => 1,
+        ]);
+
+        try {
+            for ($i=0; $i < count($request->products_ids); $i++) {
+                DB::table('commands_products')->insert([
+                    'command_id' => $created_command->id,
+                    'product_id' => $request->products_ids[$i],
+                    'quantity' => $request->quantity[$i]
+                ]);
+            }
+            DB::commit();
+
+            return view('commands');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            throw $th;
+        }
     }
 
     /**

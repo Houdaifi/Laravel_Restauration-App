@@ -34,7 +34,7 @@
                         <button type="submit" class="bg-yellow-400 rounded-xl text-black font-light px-2 text-sm">Cart</button>
                         <input type="hidden" id="OrdersIds" name="OrdersIds" value="">
                     </form>
-                    <form action="{{URL('/commands')}}" method="GET">
+                    <form action="{{route('commands')}}" method="GET">
                         @csrf
                         <button type="submit" class="rounded-md text-black font-semibold w-24 h-8">Commands</button>
                     </form>

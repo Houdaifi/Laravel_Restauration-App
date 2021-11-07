@@ -27,4 +27,7 @@ Route::post('/register', [AuthController::class, 'store']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/cart', [CommandController::class, 'create'])->middleware('auth')->name('cart');
+Route::post('/cart', [CommandController::class, 'store'])->middleware('auth');
+
+Route::get('/command', [CommandController::class, 'index'])->middleware('auth')->name('commands');
 
