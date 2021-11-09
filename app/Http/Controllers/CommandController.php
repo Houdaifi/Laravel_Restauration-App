@@ -18,7 +18,7 @@ class CommandController extends Controller
      */
     public function index()
     {
-        $commands = Commands::with('command_products:name,price', 'statut:id,name');
+        $commands = Commands::with('command_products', 'statut:id,name');
 
         if(Auth()->user()->role == 'user'){
             $commands = $commands->where('user_id', Auth()->user()->id);

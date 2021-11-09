@@ -22,7 +22,7 @@ class Commands extends Model
 
     public function command_products()
     {
-        return $this->belongsToMany(Products::class, 'commands_products', 'product_id', 'command_id')
+        return $this->belongsToMany(Products::class, 'commands_products', 'command_id', 'product_id')
                     ->withPivot('quantity');
     }
 
