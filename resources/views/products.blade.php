@@ -19,7 +19,7 @@
                 </div>
                 @auth
                   <div class="px-3 pb-2 flex justify-end">
-                    <button id="{{'btnAdd'.$product->id}}" type="button" class="bg-yellow-400 px-3 py-1 rounded text-xs" onclick="addToCart({{$product->id}})">Add to Cart</button>
+                    <button id="{{'btnAdd'.$product->id}}" type="button" class="bg-yellow-400 px-3 py-1 rounded text-xs" onclick="ToogleToCart({{$product->id}})">Add to Cart</button>
                   </div>
                 @endauth
               </div>
@@ -32,26 +32,44 @@
       var currentOrders = JSON.parse(sessionStorage.getItem("orders"));
 
       // Change style Off choosed Products
-      function change_cart_button(product_id){
+      function change_cart_button_to_added(product_id){
         const btnClicked = document.getElementById('btnAdd'+product_id);
         btnClicked.innerHTML = "Added";
         btnClicked.classList.remove("bg-yellow-400");
         btnClicked.classList.add("bg-green-400");
-        btnClicked.disabled = true;
+      }
+
+      function change_cart_button_to_ToAdd(product_id){
+        const btnClicked = document.getElementById('btnAdd'+product_id);
+        btnClicked.innerHTML = "Add to Cart";
+        btnClicked.classList.add("bg-yellow-400");
+        btnClicked.classList.remove("bg-green-400");
       }
 
       let orders = []
 
+      // recover already added products
       currentOrders.forEach(el => {
-        change_cart_button(el);
+        change_cart_button_to_added(el);
         orders.push(el);
       });
       
-      function addToCart(product_id){
-        if(!orders.includes[product_id]) orders.push(product_id)
+      function ToogleToCart(product_id){
 
-        // Change Clicked Btn Style
-        change_cart_button(product_id);
+        if(orders.includes(product_id)){
+          var i = orders.indexOf(product_id);
+          if(i != -1) {
+            orders.splice(i, 1);
+          }
+
+          // Change Clicked Btn Style
+          change_cart_button_to_ToAdd(product_id);
+        }
+        else{
+          orders.push(product_id)
+          // Change Clicked Btn Style
+          change_cart_button_to_added(product_id);
+        }
 
         sessionStorage.setItem('orders', JSON.stringify(orders));
 

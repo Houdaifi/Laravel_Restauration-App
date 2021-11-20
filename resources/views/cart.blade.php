@@ -7,7 +7,7 @@
             <div class="w-3/4 bg-white px-10 py-10">
             <div class="flex justify-between border-b pb-8">
                 <h1 class="text-2xl">Meals Cart</h1>
-                <h2 class="text-2xl">3 Items</h2>
+                <h2 class="text-2xl" id="items_length"></h2>
             </div>
             <div class="flex mt-10 mb-5">
                 <h3 class="text-gray-600 text-xs uppercase w-2/5">Meal</h3>
@@ -23,12 +23,13 @@
                     </div>
                     <div class="flex flex-col justify-around ml-4">
                         <div><span class="font-semibold text-sm">{{$product->name}}</span></div>
-                        <div><button type="button" class="text-red-500 text-xs" onclick="remove_product_from_cart({{$key}})">Remove</button></div>
+                        {{-- <div><button type="button" class="text-red-500 text-xs" onclick="remove_product_from_cart({{$key}})">Remove</button></div> --}}
                     </div>
                     </div>
                     <div class="flex justify-center w-1/5">
                         <input class="mx-2 border text-center w-8" onchange="update_prices()" name="quantity[]" id="{{'qte'.$product->id}}" type="text" value="1">
                     </div>
+                    <input type="hidden" id="{{'price'.$product->id}}" value="{{$product->price}}">
                     <span class="text-center w-1/5 text-sm">{{$product->price}} Dhs</span>
                     <input type="hidden" name="products_ids[]" value="{{$product->id}}">
                     <span class="text-center w-1/5 text-sm" id="{{'total_price'.$product->id}}"></span>
@@ -53,11 +54,8 @@
     <script>
         let choosedItems = JSON.parse(sessionStorage.getItem("orders"));
 
-        function remove_product_from_cart(product_index){
-            choosedItems.splice(product_index,1);
-            sessionStorage.setItem('orders', JSON.stringify(choosedItems));
-            window.location.href = "{{ route('cart')}}";
-        }
+        // Set items length
+        document.getElementById('items_length').innerHTML = choosedItems.length + ' Items';
 
         function update_prices(){
             let price = 0;

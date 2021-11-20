@@ -76,7 +76,8 @@ class CommandController extends Controller
             }
             DB::commit();
 
-            return view('commands');
+            return redirect()->route('commands');
+        
         } catch (\Throwable $th) {
             DB::rollback();
             throw $th;
